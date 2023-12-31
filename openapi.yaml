@@ -1,0 +1,30 @@
+openapi: 3.0.0
+info:
+  title: My Application API
+  description: API for interacting with various functionalities of My Application, including document management and other features.
+  version: 1.0.0
+servers:
+  - url: https://rhetorically-98ba2.web.app
+    description: Main Application API server
+paths:
+  /api/listDocs:
+    get:
+      operationId: listDocs
+      summary: List document names from Google Drive
+      description: Retrieves a list of document names from Google Drive. Requires OAuth 2.0 authentication.
+      security:
+        - OAuth2:
+            - https://www.googleapis.com/auth/drive.activity
+      responses:
+        "200":
+          description: An array of Google Drive document names.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        "401":
+          description: Unauthorized - User not logged in or invalid/expired token.
+        "405":
+          description: Method Not Allowed

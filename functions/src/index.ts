@@ -1,19 +1,18 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
-import {onRequest} from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+import { onRequest } from "firebase-functions/v2/https";
 
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+import admin = require("firebase-admin");
+admin.initializeApp();
+
+export const helloWorld = onRequest((req, res) => {
+  logger.log("Hello logger!");
+  res.send("Hello from Firebase!");
+});
+
+import proxy = require("./endpoints/proxy");
+exports.proxyTokenUrl = proxy.proxyTokenUrl;
+exports.proxyAuthUrl = proxy.proxyAuthUrl;
+
+import drive = require("./endpoints/drive");
+exports.listDocs = drive.listDocs;
