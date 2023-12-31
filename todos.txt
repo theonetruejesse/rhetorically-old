@@ -3,3 +3,7 @@
     - incorporate Google Picker API into flow
 
 - github collaboration settings
+
+- migrate axios to googleapis sdk
+
+- proxy firebase auth
