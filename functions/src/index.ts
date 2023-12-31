@@ -19,7 +19,7 @@ exports.listDocs = drive.listDocs;
 
 import docs = require("./endpoints/docs");
 exports.getDocText = docs.getDocText;
-exports.batchUpdates = docs.batchUpdates;
+exports.updateDoc = docs.updateDoc;
 
 import oauth = require("./endpoints/oauth");
 exports.googleSignIn = oauth.googleSignIn;

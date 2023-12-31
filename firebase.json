@@ -41,6 +41,10 @@
         "function": "getDocText"
       },
       {
+        "source": "/api/updateDoc",
+        "function": "updateDoc"
+      },
+      {
         "source": "/api/helloWorld",
         "function": "helloWorld"
       }

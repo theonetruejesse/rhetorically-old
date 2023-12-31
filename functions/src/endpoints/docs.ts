@@ -51,7 +51,7 @@ export const getDocText = corsRequest(async (req, res) => {
   }
 });
 
-export const batchUpdates = corsRequest(async (req, res) => {
+export const updateDoc = corsRequest(async (req, res) => {
   try {
     // Extract the access token from the request headers
     const documentId = req.query.documentId;
