@@ -3,5 +3,3 @@
     - incorporate Google Picker API into flow
 
 - github collaboration settings
-
-- local oauth for testing

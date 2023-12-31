@@ -36,7 +36,10 @@
         "source": "/api/listDocs",
         "function": "listDocs"
       },
-
+      {
+        "source": "/api/getDocText",
+        "function": "getDocText"
+      },
       {
         "source": "/api/helloWorld",
         "function": "helloWorld"

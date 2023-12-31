@@ -28,7 +28,7 @@ export const listDocs = corsRequest(async (req, res) => {
     const docs = response.data.files.map((f: any) => {
       return {
         id: f.id,
-        name: f.name,
+        title: f.name,
       };
     });
     res.send(docs);

@@ -17,6 +17,9 @@ exports.proxyAuthUrl = proxy.proxyAuthUrl;
 import drive = require("./endpoints/drive");
 exports.listDocs = drive.listDocs;
 
+import docs = require("./endpoints/docs");
+exports.getDocText = docs.getDocText;
+
 import oauth = require("./endpoints/oauth");
 exports.googleSignIn = oauth.googleSignIn;
 exports.oauth2callback = oauth.oauth2callback;

@@ -10,20 +10,57 @@ paths:
   /api/listDocs:
     get:
       operationId: listDocs
-      summary: List document names from Google Drive
-      description: Retrieves a list of document names from Google Drive. Requires OAuth 2.0 authentication.
+      summary: List document title from Google Drive
+      description: Retrieves a list of document titles from Google Drive. Requires OAuth 2.0 authentication.
       security:
-        - OAuth2:
-            - https://www.googleapis.com/auth/drive.activity
+        - bearerAuth: []
       responses:
         "200":
-          description: An array of Google Drive document names.
+          description: An array of Google Drive document titles and ids.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: string
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The unique identifier of the Google Drive document.
+                    title:
+                      type: string
+                      description: The title of the Google Drive document.
+        "401":
+          description: Unauthorized - User not logged in or invalid/expired token.
+        "405":
+          description: Method Not Allowed
+
+  /api/getDocText:
+    get:
+      operationId: getDocText
+      summary: Returns the text of a Google Doc given its id.
+      description: Returns the text of a Google Doc given its id. Requires OAuth 2.0 authentication.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: documentId
+          required: true
+          description: The ID of the Google Document.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response with document text.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+        "400":
+          description: Missing query - documentId.
         "401":
           description: Unauthorized - User not logged in or invalid/expired token.
         "405":
