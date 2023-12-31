@@ -1,3 +1,7 @@
 - reduce total scope from restricted -> sensitive
     - change scope from https://www.googleapis.com/auth/drive.activity -> https://www.googleapis.com/auth/drive.file
     - incorporate Google Picker API into flow
+
+- github collaboration settings
+
+- local oauth for testing

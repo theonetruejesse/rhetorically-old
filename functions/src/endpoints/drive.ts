@@ -25,7 +25,12 @@ export const listDocs = corsRequest(async (req, res) => {
       }
     );
     // Process and return the list of documents
-    const docs = response.data.files.map((f: any) => f.name);
+    const docs = response.data.files.map((f: any) => {
+      return {
+        id: f.id,
+        name: f.name,
+      };
+    });
     res.send(docs);
   } catch (error: any) {
     logger.log("error", error);

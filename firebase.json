@@ -25,9 +25,18 @@
         "function": "proxyAuthUrl"
       },
       {
+        "source": "/r/googleSignIn",
+        "function": "googleSignIn"
+      },
+      {
+        "source": "/r/google-callback/oauth2callback",
+        "function": "oauth2callback"
+      },
+      {
         "source": "/api/listDocs",
         "function": "listDocs"
       },
+
       {
         "source": "/api/helloWorld",
         "function": "helloWorld"
