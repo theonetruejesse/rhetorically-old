@@ -37,12 +37,12 @@
         "function": "listDocs"
       },
       {
-        "source": "/api/getDocText",
-        "function": "getDocText"
+        "source": "/api/getIndexedText",
+        "function": "getIndexedText"
       },
       {
-        "source": "/api/updateDoc",
-        "function": "updateDoc"
+        "source": "/api/annotateDoc",
+        "function": "annotateDoc"
       },
       {
         "source": "/api/helloWorld",

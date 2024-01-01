@@ -11,5 +11,5 @@
   "compileOnSave": true,
   "include": [
     "src"
-  ]
+, "../requestBody.ts", "../scratch/requestBody.ts"  ]
 }

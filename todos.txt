@@ -7,3 +7,14 @@
 - migrate axios to googleapis sdk
 
 - proxy firebase auth
+
+- make sure filtering for getDocText accounts for suggestions too
+
+- unit testing for google doc editing edge cases
+
+- adjust DocRequest type defintions to properly check union typing
+
+- write a requestBody validator
+
+- write more utils for checking edgecases for paragraph formatting utility
+
