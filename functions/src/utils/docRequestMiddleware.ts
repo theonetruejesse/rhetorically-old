@@ -6,14 +6,22 @@ import { OAuth2Client } from "google-auth-library";
 import { corsRequest } from "./cors";
 import { HandlerFunction } from "../types/HandlerFunction";
 
-interface ValidatedData {
-  documentId: string;
-  accessToken: string;
+declare global {
+  namespace Express {
+    interface Request {
+      docContext: DocRequestContext;
+    }
+  }
 }
 
 export interface DocRequestContext {
   documentId: string;
   docsClient: docs_v1.Docs;
+}
+
+interface ValidatedData {
+  documentId: string;
+  accessToken: string;
 }
 
 const validateDocRequest = (req: Request): ValidatedData => {
@@ -28,28 +36,32 @@ const validateDocRequest = (req: Request): ValidatedData => {
   return { documentId, accessToken };
 };
 
+const createDocClient = (access_token: string) => {
+  const authClient = new OAuth2Client();
+  authClient.setCredentials({
+    access_token,
+  });
+
+  return google.docs({
+    version: "v1",
+    auth: authClient,
+  });
+};
+
+// middleware for all google doc api requests
 // (wrapper function, use instead of onRequest)
-// handle cors middleware on request
-export const docRequest = (handler: HandlerFunction) => {
+// output: inserts documentContent into req, with validated id + google doc api client
+export const docRequestMiddleware = (handler: HandlerFunction) => {
   return corsRequest(async (req: Request, res: Response) => {
     try {
       const validatedData = validateDocRequest(req);
+      const docsClient = createDocClient(validatedData.accessToken);
 
-      const authClient = new OAuth2Client();
-      authClient.setCredentials({
-        access_token: validatedData.accessToken,
-      });
-
-      const docsClient = google.docs({
-        version: "v1",
-        auth: authClient,
-      });
-
-      // docContext defined in src/types/express.d.ts
       req.docContext = {
         documentId: validatedData.documentId,
         docsClient,
       };
+
       await handler(req, res);
     } catch (error: any) {
       logger.log("error", error); // Log the error for debugging.

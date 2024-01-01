@@ -38,8 +38,8 @@ paths:
   /api/getIndexedText:
     get:
       operationId: getIndexedText
-      summary: Returns text of a Google Doc given its id.
-      description: Returns the text of a Google Doc given its id. Each paragraph of the text has index annotated. The start of a paragraph is denoted with <$n> and end is denoted with <n$> (with index integer at n). Requires OAuth 2.0 authentication.
+      summary: Returns text of a Google Doc with index annotated given id.
+      description: Returns the text of a Google Doc given the documentId. Parts of the text has index annotated. Indexes throughout the text are denoted within <$> tags (the number delimited in the tag is the index). Requires OAuth 2.0 authentication.
       security:
         - bearerAuth: []
       parameters:
@@ -59,6 +59,56 @@ paths:
                 properties:
                   content:
                     type: string
+                    description: Returns a confirmation with the url of the edited document
+        "400":
+          description: Missing query - documentId.
+        "401":
+          description: Unauthorized - User not logged in or invalid/expired token.
+        "405":
+          description: Method Not Allowed
+  /api/highlightText:
+    post:
+      operationId: highlightText
+      summary: Highlights specified text ranges in a Google Doc.
+      description: Highlights sections of a Google Doc based on provided text ranges. Requires OAuth 2.0 authentication.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: documentId
+          required: true
+          description: The ID of the Google Document.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sections:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      startIndex:
+                        type: integer
+                        format: int32
+                      endIndex:
+                        type: integer
+                        format: int32
+      responses:
+        "200":
+          description: Successfully highlighted text.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Returns a confirmation with the url of the edited document
         "400":
           description: Missing query - documentId.
         "401":

@@ -8,8 +8,8 @@ const corsOptions = {
   credentials: true,
 };
 
+// cors middleware for handling requests
 // (wrapper function, use instead of onRequest)
-// handle cors middleware on request
 export const corsRequest = (handler: HandlerFunction) => {
   return onRequest(async (req, res) => {
     cors(corsOptions)(req, res, async () => {

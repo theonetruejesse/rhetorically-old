@@ -1,10 +1,12 @@
-import { logger } from "firebase-functions/v2";
-import { docRequest } from "../utils/docRequest";
+import { TextRange } from "../types/Doc";
+import { docRequestMiddleware } from "../utils/docRequestMiddleware";
+import { createHighlightRequests } from "../utils/highlight";
+import { createDocRequestBody } from "../utils/requestBody";
 
-// returns the entire text, with indexes added: <$#> ... <#$>
+// returns the entire text, with indexes added: <$#>...text element...<$#>
 // this is used by gpt to select text for feedback
-// ex: <$1>hello world<12$>
-export const getIndexedText = docRequest(async (req, res) => {
+// ex: <$1>hello world
+export const getIndexedText = docRequestMiddleware(async (req, res) => {
   const { documentId, docsClient } = req.docContext;
 
   const doc = await docsClient.documents.get({
@@ -18,22 +20,18 @@ export const getIndexedText = docRequest(async (req, res) => {
 
   // loop through paragraph, elements for ouputting formatted text
   let text = "";
-  paragraphs?.forEach((p) =>
+  paragraphs?.forEach((p) => {
     p.paragraph!.elements?.forEach((e) => {
-      // check if content exist + ignore empty lines (only '\n')
-      if (e.textRun?.content && e.textRun.content.length > 1) {
-        // all textRun.content end with '\n' char, moved to after <#$>
-        const slicedText = e.textRun.content.slice(0, -1);
-        text += `<$${e.startIndex}>${slicedText}<${e.endIndex}$>\n`;
-      }
-    })
-  );
-
-  logger.log(text);
+      // check if content exist + ignore empty lines (lines with only '\n')
+      if (e.textRun?.content) text += `<$${e.startIndex}>${e.textRun.content}`;
+    });
+    // last char of paragraph always '\n', reformatting to start new line after final <$#>
+    text = text.slice(0, -1) + `<$${p.endIndex}>\n`;
+  });
   res.send(text);
 });
 
-export const annotateDoc = docRequest(async (req, res) => {
+export const annotateDoc = docRequestMiddleware(async (req, res) => {
   const { documentId, docsClient } = req.docContext;
 
   // need validator function to check, also adjust openapi specification
@@ -45,8 +43,22 @@ export const annotateDoc = docRequest(async (req, res) => {
   });
 
   res.send(
-    `Feedback Given: https://docs.google.com/document/d/${documentId}/edit `
+    `Feedback Given: https://docs.google.com/document/d/${documentId}/edit`
   );
 });
 
-// export const highlightText = corsRequest(async (req, res) => {});
+export const highlightText = docRequestMiddleware(async (req, res) => {
+  const { documentId, docsClient } = req.docContext;
+  const highlightSections: Array<TextRange> = req.body.sections;
+
+  const requests = createHighlightRequests(highlightSections);
+
+  await docsClient.documents.batchUpdate({
+    documentId: documentId,
+    requestBody: createDocRequestBody(requests),
+  });
+
+  res.send(
+    `Feedback Given: https://docs.google.com/document/d/${documentId}/edit`
+  );
+});

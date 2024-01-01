@@ -1,12 +1,15 @@
 import { HighlightColor } from "../constants";
-import { DocRequestBody, TextRange } from "../types/Doc";
+import { DocRequest, TextRange } from "../types/Doc";
 
-export const highlightText = (highlights: Array<TextRange>) => {
-  // Create RequestBody for every valid highlight range
+export const createHighlightRequests = (
+  highlightSections: Array<TextRange>
+): DocRequest[] => {
+  // Create RequestBody for every valid highlight section
   // using reduce to maintain that sweet sweet linear runtime :0
-  return highlights.reduce((acc: Array<DocRequestBody>, h) => {
+  return highlightSections.reduce((acc: Array<DocRequest>, highlight) => {
     // Minimum index = 1 for Google Docs compatibility
-    if (0 < h.startIndex && h.startIndex < h.endIndex)
+    // would be nice to also do an endIndex check too
+    if (0 < highlight.startIndex && highlight.startIndex < highlight.endIndex)
       acc.push({
         updateTextStyle: {
           textStyle: {
@@ -14,11 +17,12 @@ export const highlightText = (highlights: Array<TextRange>) => {
           },
           fields: "backgroundColor",
           range: {
-            startIndex: h.startIndex,
-            endIndex: h.endIndex,
+            startIndex: highlight.startIndex,
+            endIndex: highlight.endIndex,
           },
         },
       });
+
     return acc;
   }, []);
 };

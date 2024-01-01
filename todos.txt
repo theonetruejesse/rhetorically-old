@@ -21,3 +21,5 @@
 - redo function (revise to pre-edit version)
 
 - output in different doc option
+
+- extend createDocRequestBody to handle writeControl arguments

@@ -41,6 +41,10 @@
         "function": "getIndexedText"
       },
       {
+        "source": "/api/highlightText",
+        "function": "highlightText"
+      },
+      {
         "source": "/api/annotateDoc",
         "function": "annotateDoc"
       },

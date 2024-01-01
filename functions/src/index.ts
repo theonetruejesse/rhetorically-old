@@ -20,6 +20,7 @@ exports.listDocs = drive.listDocs;
 import docs = require("./endpoints/docs");
 exports.getIndexedText = docs.getIndexedText;
 exports.annotateDoc = docs.annotateDoc;
+exports.highlightText = docs.highlightText;
 
 import oauth = require("./endpoints/oauth");
 exports.googleSignIn = oauth.googleSignIn;
