@@ -35,11 +35,11 @@ paths:
         "405":
           description: Method Not Allowed
 
-  /api/getDocText:
+  /api/getIndexedText:
     get:
-      operationId: getDocText
-      summary: Returns the text of a Google Doc given its id.
-      description: Returns the text of a Google Doc given its id. Requires OAuth 2.0 authentication.
+      operationId: getIndexedText
+      summary: Returns text of a Google Doc given its id.
+      description: Returns the text of a Google Doc given its id. Each paragraph of the text has index annotated. The start of a paragraph is denoted with <$n> and end is denoted with <n$> (with index integer at n). Requires OAuth 2.0 authentication.
       security:
         - bearerAuth: []
       parameters:
