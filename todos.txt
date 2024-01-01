@@ -23,3 +23,7 @@
 - output in different doc option
 
 - extend createDocRequestBody to handle writeControl arguments
+
+- create validators for req.body in methods, expand middleware to interface with types
+
+- change prompting one-shot example of Selecting Text Sections to cover longer length text

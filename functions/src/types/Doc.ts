@@ -2,8 +2,8 @@
 // https://developers.google.com/docs/api/reference/rest/v1/documents/request
 
 export type DocRequestBody = {
+  requests: Array<DocRequest>;
   writeControl?: WriteControl;
-  request: Array<DocRequest>;
 };
 
 export type WriteControl = {

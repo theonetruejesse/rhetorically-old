@@ -1,7 +1,7 @@
 import { TextRange } from "../types/Doc";
 import { docRequestMiddleware } from "../utils/docRequestMiddleware";
 import { createHighlightRequests } from "../utils/highlight";
-import { createDocRequestBody } from "../utils/requestBody";
+import { createDocRequestBody } from "../utils/createDocRequestBody";
 
 // returns the entire text, with indexes added: <$#>...text element...<$#>
 // this is used by gpt to select text for feedback
@@ -26,7 +26,7 @@ export const getIndexedText = docRequestMiddleware(async (req, res) => {
       if (e.textRun?.content) text += `<$${e.startIndex}>${e.textRun.content}`;
     });
     // last char of paragraph always '\n', reformatting to start new line after final <$#>
-    text = text.slice(0, -1) + `<$${p.endIndex}>\n`;
+    if (p.endIndex) text = text.slice(0, -1) + `<$${p.endIndex - 1}>\n`;
   });
   res.send(text);
 });
