@@ -7,7 +7,7 @@ a freakishly good college essay editor.
 ### Tools
 
 - Rquired: Github, Firebase, GCP
-- Recommended: install google extensions Reqbin, JSON Formatter
+- Recommended: install chrome extensions Reqbin, JSON Formatter
 
 ### Steps
 
@@ -22,7 +22,7 @@ a freakishly good college essay editor.
 - Run 'cd functions' then 'npm run serve'
   - follow directions in console for accessing the local emulator
 - I recommend the following setup:
-  - get 'https://rhetorically.collegiate.dev/r/googleSignIn'
+  - go to 'https://rhetorically.collegiate.dev/r/googleSignIn'
   - this will redirect you to google oauth flow, sign in using admin@collegiate.dev
   - copy the value from the 'access_token' key
   - go to https://reqbin.com and add the token into Authorization section
