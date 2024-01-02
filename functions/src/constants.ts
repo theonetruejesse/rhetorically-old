@@ -6,6 +6,7 @@ export const GOOGLE_AUTH_SCOPES = [
 ];
 
 // use with backgroundColor field
+// collegiate highlight blue
 export const HighlightColor: OptionalColor = {
   color: {
     rgbColor: {

@@ -2,6 +2,7 @@ import { logger } from "firebase-functions/v2";
 import axios from "axios";
 import { corsRequest } from "../utils/cors";
 
+// todo, refactor to use googleapi
 export const listDocs = corsRequest(async (req, res) => {
   try {
     // Extract the access token from the request headers

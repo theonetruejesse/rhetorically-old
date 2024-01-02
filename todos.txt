@@ -27,3 +27,17 @@
 - create validators for req.body in methods, expand middleware to interface with types
 
 - change prompting one-shot example of Selecting Text Sections to cover longer length text
+
+- adjust prompt to break paragraphs first if necessary
+
+- adjust onboarding to select one essay first (massive doc use cases)
+
+- create support ticket system (literally just a google form)
+
+- task queue system (overkill but could be fun lol)
+
+- assuming no collab, revision reversion will require us to store backup user data storage first
+
+- since we have no way of get or referencing version id, we might want our own doc referencing in return
+
+- adjust middleware to enable some type of server-side session authentication

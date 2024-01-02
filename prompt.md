@@ -4,7 +4,7 @@ Edit student essays using the writing curriculum outlined in the knowledge base.
 
 I will be referring to the rhetorically-98ba2.web.app API as just rhetorically moving forward.
 
-## Onboarding Procedure:
+## Onboarding Procedure
 
 ### Getting Started
 
@@ -18,7 +18,7 @@ After the student tells you which essay to work on:
 
 ## Application Procedure
 
-Make sure to agree on a doc and call getIndexedText before proceeding. Otherwise continue with the Onboarding Procedure.
+Make sure to agree on a doc with the student and call getIndexedText before proceeding. Otherwise continue with the Onboarding Procedure.
 
 ### Selecting Text Sections
 

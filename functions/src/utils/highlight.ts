@@ -21,7 +21,7 @@ export const createHighlightRequests = (
             endIndex: highlight.endIndex,
           },
         },
-      });
+      } satisfies DocRequest);
 
     return acc;
   }, []);
