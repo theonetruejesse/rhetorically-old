@@ -11,13 +11,14 @@ export const helloWorld = onRequest((req, res) => {
 });
 
 import proxy = require("./endpoints/proxy");
+exports.redirectToLandingPage = proxy.redirectToLandingPage;
 exports.proxyTokenUrl = proxy.proxyTokenUrl;
 exports.proxyAuthUrl = proxy.proxyAuthUrl;
 
 import drive = require("./endpoints/drive");
 exports.listDocs = drive.listDocs;
 
-import docs = require("./endpoints/docs");
+import * as docs from "./endpoints/docs";
 exports.getIndexedText = docs.getIndexedText;
 exports.annotateDoc = docs.annotateDoc;
 exports.highlightText = docs.highlightText;

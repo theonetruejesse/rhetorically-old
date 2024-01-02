@@ -2,6 +2,12 @@
 // redirect workaround for addressing “Auth URL, Token URL and API hostname must share a root domain” issues
 import { logger } from "firebase-functions/v2";
 import { corsRequest } from "../utils/cors";
+import { onRequest } from "firebase-functions/v2/https";
+
+// https://rhetorically.collegiate.dev => https://collegiate-consulting.com
+export const redirectToLandingPage = onRequest((req, res) =>
+  res.redirect("https://collegiate-consulting.com")
+);
 
 // https://accounts.google.com/o/oauth2/auth
 export const proxyAuthUrl = corsRequest((req, res) => {

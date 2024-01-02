@@ -17,6 +17,10 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
+        "source": "/",
+        "function": "redirectToLandingPage"
+      },
+      {
         "source": "/r/proxyTokenUrl",
         "function": "proxyTokenUrl"
       },
