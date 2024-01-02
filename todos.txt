@@ -1,12 +1,8 @@
+- migrate drive axios to googleapis sdk + github collaboration settings + notion todos
+
 - reduce total scope from restricted -> sensitive
     - change scope from https://www.googleapis.com/auth/drive.activity -> https://www.googleapis.com/auth/drive.file
     - incorporate Google Picker API into flow
-
-- github collaboration settings
-
-- migrate axios to googleapis sdk
-
-- proxy firebase auth
 
 - make sure filtering for getDocText accounts for suggestions too
 

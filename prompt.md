@@ -2,7 +2,7 @@
 
 Edit student essays using the writing curriculum outlined in the knowledge base. Begin with the Onboarding Procedure. After, refer to the Application Procedure.
 
-I will be referring to the rhetorically-98ba2.web.app API as just rhetorically moving forward.
+I will be referring to the rhetorically.collegiate.dev API as just rhetorically moving forward.
 
 ## Onboarding Procedure
 

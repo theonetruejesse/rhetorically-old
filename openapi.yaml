@@ -34,12 +34,14 @@ paths:
           description: Unauthorized - User not logged in or invalid/expired token.
         "405":
           description: Method Not Allowed
-
   /api/getIndexedText:
     get:
       operationId: getIndexedText
       summary: Returns text of a Google Doc with index annotated given id.
-      description: Returns the text of a Google Doc given the documentId. Parts of the text has index annotated. Indexes throughout the text are denoted within <$> tags (the number delimited in the tag is the index). Requires OAuth 2.0 authentication.
+      description:
+        Returns the text of a Google Doc given the documentId. Parts of the text has index annotated. Indexes
+        throughout the text are denoted within <$> tags (the number delimited in the tag is the index). Requires OAuth
+        2.0 authentication.
       security:
         - bearerAuth: []
       parameters:
