@@ -25,5 +25,5 @@ a freakishly good college essay editor.
   - get 'https://rhetorically.collegiate.dev/r/googleSignIn'
   - this will redirect you to google oauth flow, sign in using admin@collegiate.dev
   - copy the value from the 'access_token' key
-  - go to https://reqbin.com/ and add the token into Authorization section
+  - go to https://reqbin.com and add the token into Authorization section
   - you can now test both local and deployed functions!
