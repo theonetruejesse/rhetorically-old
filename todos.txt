@@ -1,5 +1,7 @@
 - audit comments for todos
 
+- google store, service, make sure security rules are in prod
+
 - migrate drive axios to googleapis sdk + github collaboration settings + notion todos
 
 - reduce total scope from restricted -> sensitive

@@ -12,6 +12,7 @@ a freakishly good college essay editor.
 ### Steps
 
 - Add .env file into /functions
+- Add serviceAccountKey.json into /functions/src
 - Login to the firebase cli
 - Run 'cd functions' then 'npm install'
 
