@@ -1,10 +1,15 @@
-import * as logger from "firebase-functions/logger";
-
-import { onRequest } from "firebase-functions/v2/https";
-
+import { STORAGE_BUCKET } from "./constants";
 import admin = require("firebase-admin");
-admin.initializeApp();
+// need to move it out of src, rn not cuz its screwing up tsc compilation
+import serviceAccount = require("./serviceAccountKey.json");
+admin.initializeApp({
+  storageBucket: STORAGE_BUCKET,
+  // @ts-ignore, firebase lib typing error
+  credential: admin.credential.cert(serviceAccount),
+});
 
+import * as logger from "firebase-functions/logger";
+import { onRequest } from "firebase-functions/v2/https";
 export const helloWorld = onRequest((req, res) => {
   logger.log("Hello logger!");
   res.send("Hello from Firebase!");
@@ -22,6 +27,7 @@ import * as docs from "./endpoints/docs";
 exports.getIndexedText = docs.getIndexedText;
 exports.annotateDoc = docs.annotateDoc;
 exports.highlightText = docs.highlightText;
+exports.saveDocVersion = docs.saveDocVersion;
 
 import oauth = require("./endpoints/oauth");
 exports.googleSignIn = oauth.googleSignIn;

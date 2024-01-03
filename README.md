@@ -20,7 +20,8 @@ a freakishly good college essay editor.
 ### Local Functions
 
 - Run 'cd functions' then 'npm run serve'
-  - follow directions in console for accessing the local emulator
+  - 'npm run serve' only works for testing solely functions, if function uses any other service use 'npm run dev'
+  - follow directions in console for local testing (open the Emulator UI link)
 - I recommend the following setup:
   - go to 'https://rhetorically.collegiate.dev/r/googleSignIn'
   - this will redirect you to google oauth flow, sign in using admin@collegiate.dev

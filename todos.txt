@@ -1,4 +1,4 @@
-- test todos
+- audit comments for todos
 
 - migrate drive axios to googleapis sdk + github collaboration settings + notion todos
 
