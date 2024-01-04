@@ -57,7 +57,9 @@ export const saveDocVersion = docRequestMiddleware(async (req, res) => {
     .collection("versions")
     .doc();
 
-  await saveVersion(verRef, doc, documentId);
+  await saveVersion(verRef, doc, documentId); // pubsub this
+
+  res.send({ versionId: verRef.id });
 });
 
 // saves createdAt (timestamp) into 'docs / {documentId}' if it doesn't exist already
@@ -101,7 +103,7 @@ const saveVersion = async (
   });
 
   // firebase storage
-  // goddamn it man, why cant i use firebase sdk with functions :(
+  // goddamn it, why cant i use firebase sdk with cloud functions :(
   const bucket = getStorage().bucket();
   const onlyTextBuffer = Buffer.from(onlyText);
   const docDataBuffer = Buffer.from(JSON.stringify(doc.data));

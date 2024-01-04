@@ -53,6 +53,10 @@
         "function": "annotateDoc"
       },
       {
+        "source": "/api/addComments",
+        "function": "addComments"
+      },
+      {
         "source": "/api/saveDocVersion",
         "function": "saveDocVersion"
       },

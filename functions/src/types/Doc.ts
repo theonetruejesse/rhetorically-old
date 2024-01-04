@@ -23,8 +23,8 @@ export type DocRequest = {
 
 export type InsertTextRequest = {
   text: string;
-  location?: Location;
-  endOfSegmentLocation?: EndOfSegmentLocation;
+  location: Location;
+  // endOfSegmentLocation?: EndOfSegmentLocation;
 };
 
 export type UpdateTextStyleRequest = {
@@ -34,13 +34,13 @@ export type UpdateTextStyleRequest = {
 };
 
 export type TextRange = {
-  segmentId?: string;
+  // segmentId?: string;
   startIndex: number;
   endIndex: number;
 };
 
 export type Location = {
-  segmentId: string;
+  // segmentId: string;
   index: number;
 };
 
