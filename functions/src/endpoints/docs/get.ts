@@ -1,8 +1,8 @@
-import { docRequestMiddleware } from "../../utils/docRequestMiddleware";
-import { processDocResponse } from "../../utils/processDocResponse";
+import { docRequest } from "../../middleware/docRequest";
+import { processDocResponse } from "./utils/processDocResponse";
 
 // primary endpoint for gpt to retrieve text documents
-export const getIndexedText = docRequestMiddleware(async (req, res) => {
+export const getIndexedText = docRequest(async (req, res) => {
   const { documentId, docsClient } = req.docContext;
 
   const doc = await docsClient.documents.get({

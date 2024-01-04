@@ -1,10 +1,9 @@
 import { logger } from "firebase-functions/v2";
 import { Request, Response } from "express";
-import { BadRequestError, UnauthorizedError } from "../types/Errors";
 import { docs_v1, google } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
 import { corsRequest } from "./cors";
-import { HandlerFunction } from "../types/HandlerFunction";
+import { BadRequestError, HandlerFunction, UnauthorizedError } from "./types";
 
 declare global {
   namespace Express {
@@ -51,7 +50,7 @@ const createDocClient = (access_token: string) => {
 // middleware for all google doc api requests
 // (wrapper function, use instead of onRequest)
 // output: inserts documentContent into req, with validated id + google doc api client
-export const docRequestMiddleware = (handler: HandlerFunction) => {
+export const docRequest = (handler: HandlerFunction) => {
   return corsRequest(async (req: Request, res: Response) => {
     try {
       const validatedData = validateDocRequest(req);

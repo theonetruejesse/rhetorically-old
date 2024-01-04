@@ -1,6 +1,6 @@
 import { onRequest } from "firebase-functions/v2/https";
 import cors = require("cors");
-import { HandlerFunction } from "../types/HandlerFunction";
+import { HandlerFunction } from "./types";
 
 const corsOptions = {
   origin: "https://chat.openai.com/.com/",

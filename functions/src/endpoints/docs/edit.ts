@@ -1,14 +1,14 @@
-import { DocRequest, TextRange } from "../../types/Doc";
-import { createDocRequestBody } from "../../utils/requestFormatting/requestBody";
-import { docRequestMiddleware } from "../../utils/docRequestMiddleware";
-import { createHighlightRequest } from "../../utils/requestFormatting/highlight";
+import { DocRequest, TextRange } from "./types";
+import { createDocRequestBody } from "./utils/requestFormatting/requestBody";
+import { docRequest } from "../../middleware/docRequest";
+import { createHighlightRequest } from "./utils/requestFormatting/highlight";
 import {
   createCommentFeedback,
   createCommentTag,
   Comment,
-} from "../../utils/requestFormatting/comment";
+} from "./utils/requestFormatting/comment";
 
-export const annotateDoc = docRequestMiddleware(async (req, res) => {
+export const annotateDoc = docRequest(async (req, res) => {
   const { documentId, docsClient } = req.docContext;
 
   const docRequest: DocRequest[] = req.body.request;
@@ -21,7 +21,7 @@ export const annotateDoc = docRequestMiddleware(async (req, res) => {
   res.send(`Feedback Given: https://docs.google.com/document/d/${documentId}/`);
 });
 
-export const highlightText = docRequestMiddleware(async (req, res) => {
+export const highlightText = docRequest(async (req, res) => {
   const { documentId, docsClient } = req.docContext;
   const highlightSections: Array<TextRange> = req.body.sections;
 
@@ -37,7 +37,7 @@ export const highlightText = docRequestMiddleware(async (req, res) => {
   res.send(`Feedback Given: https://docs.google.com/document/d/${documentId}/`);
 });
 
-export const addComments = docRequestMiddleware(async (req, res) => {
+export const addComments = docRequest(async (req, res) => {
   const { documentId, docsClient } = req.docContext;
   const comments: Array<Comment> = req.body.comments;
 

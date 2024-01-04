@@ -1,4 +1,4 @@
-import { DocRequest, TextRange } from "../../types/Doc";
+import { DocRequest, TextRange } from "../../types";
 
 const tagFormat = (tag: number) => `[${tag}]: `;
 

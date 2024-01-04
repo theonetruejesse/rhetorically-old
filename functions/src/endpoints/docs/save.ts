@@ -1,4 +1,4 @@
-import { docRequestMiddleware } from "../../utils/docRequestMiddleware";
+import { docRequest } from "../../middleware/docRequest";
 import {
   DocumentData,
   DocumentReference,
@@ -6,7 +6,7 @@ import {
   Firestore,
   getFirestore,
 } from "firebase-admin/firestore";
-import { processDocResponse } from "../../utils/processDocResponse";
+import { processDocResponse } from "./utils/processDocResponse";
 import { getStorage } from "firebase-admin/storage";
 import { docs_v1 } from "googleapis";
 import { GaxiosResponse } from "gaxios";
@@ -37,7 +37,7 @@ import { BUCKET_URL_REQUEST } from "../../constants";
 
 // eventually decide which segment to work on, will need index args
 // processes new document, save it into firestore + upload content into storage
-export const saveDocVersion = docRequestMiddleware(async (req, res) => {
+export const saveDocVersion = docRequest(async (req, res) => {
   const { documentId, docsClient } = req.docContext;
 
   const db = getFirestore();

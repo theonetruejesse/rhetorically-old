@@ -1,5 +1,16 @@
-import { HighlightColor } from "../../constants";
-import { DocRequest, TextRange } from "../../types/Doc";
+import { DocRequest, OptionalColor, TextRange } from "../../types";
+
+// use with backgroundColor field
+// collegiate highlight blue
+export const HighlightColor: OptionalColor = {
+  color: {
+    rgbColor: {
+      red: 0.85,
+      green: 0.9,
+      blue: 0.96,
+    },
+  },
+};
 
 export const createHighlightRequest = (section: TextRange): DocRequest => {
   // todo, section.startIndex, section.endIndex validator function
