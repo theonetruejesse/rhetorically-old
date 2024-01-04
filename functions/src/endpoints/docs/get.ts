@@ -1,5 +1,5 @@
 import { docRequest } from "../../middleware/docRequest";
-import { processDocResponse } from "./utils/processDocResponse";
+import { processDoc } from "./utils/processDoc";
 
 // primary endpoint for gpt to retrieve text documents
 export const getIndexedText = docRequest(async (req, res) => {
@@ -9,7 +9,7 @@ export const getIndexedText = docRequest(async (req, res) => {
     documentId,
   });
 
-  const { indexedText } = processDocResponse(doc);
+  const { indexedText } = processDoc(doc);
 
   res.send(indexedText);
 });

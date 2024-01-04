@@ -6,7 +6,7 @@ import {
   Firestore,
   getFirestore,
 } from "firebase-admin/firestore";
-import { processDocResponse } from "./utils/processDocResponse";
+import { processDoc } from "./utils/processDoc";
 import { getStorage } from "firebase-admin/storage";
 import { docs_v1 } from "googleapis";
 import { GaxiosResponse } from "gaxios";
@@ -94,7 +94,7 @@ const saveVersion = async (
   doc: GaxiosResponse<docs_v1.Schema$Document>,
   documentId: string
 ) => {
-  const { endIndexes, onlyText } = processDocResponse(doc);
+  const { endIndexes, onlyText } = processDoc(doc);
 
   // firestore
   verRef.set({

@@ -3,9 +3,7 @@ import { docs_v1 } from "googleapis";
 
 // will need to extend documentId to include TextRange (make into args typing)
 // processes the doc.data response, returns formatted data for getIndexedText(), saveNewDocument()
-export const processDocResponse = (
-  doc: GaxiosResponse<docs_v1.Schema$Document>
-) => {
+export const processDoc = (doc: GaxiosResponse<docs_v1.Schema$Document>) => {
   // need to extend filtering to support lists
   // filter first for paragraph as content type with text
   const filteredContent = doc.data.body?.content?.filter(

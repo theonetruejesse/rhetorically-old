@@ -26,7 +26,6 @@ exports.listDocs = drive.listDocs;
 import * as docs from "./endpoints/docs";
 exports.getIndexedText = docs.getIndexedText;
 exports.saveDocVersion = docs.saveDocVersion;
-exports.annotateDoc = docs.annotateDoc;
 exports.highlightText = docs.highlightText;
 exports.addComments = docs.addComments;
 
