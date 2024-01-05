@@ -2,9 +2,13 @@ import { logger } from "firebase-functions/v2";
 import { Request, Response } from "express";
 import { docs_v1, google } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
-import { corsRequest } from "./cors";
-import { BadRequestError, HandlerFunction, UnauthorizedError } from "./types";
-import { DocHandler } from "../endpoints/docs/utils/handlers";
+import { corsRequest } from "../../../cors";
+import {
+  BadRequestError,
+  HandlerFunction,
+  UnauthorizedError,
+} from "../../../types";
+import { DocHandler } from "./handlers";
 
 declare global {
   namespace Express {

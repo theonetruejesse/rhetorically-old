@@ -1,7 +1,7 @@
 import { defineString } from "firebase-functions/params";
 import { google } from "googleapis";
 import { GOOGLE_AUTH_SCOPES } from "../constants";
-import { corsRequest } from "../middleware/cors";
+import { corsRequest } from "../cors";
 
 const CLIENT_ID = defineString("CLIENT_ID");
 const CLIENT_SECRET = defineString("CLIENT_SECRET");

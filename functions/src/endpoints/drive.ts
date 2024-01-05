@@ -1,6 +1,6 @@
 import { logger } from "firebase-functions/v2";
 import axios from "axios";
-import { corsRequest } from "../middleware/cors";
+import { corsRequest } from "../cors";
 
 // todo, refactor to use googleapi
 export const listDocs = corsRequest(async (req, res) => {

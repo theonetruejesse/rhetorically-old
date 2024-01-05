@@ -1,4 +1,4 @@
-import { docRequest } from "../../middleware/docRequest";
+import { docRequest } from "./utils/middleware";
 import {
   DocumentData,
   DocumentReference,

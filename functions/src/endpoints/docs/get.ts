@@ -1,4 +1,4 @@
-import { docRequest } from "../../middleware/docRequest";
+import { docRequest } from "./utils/middleware";
 import { processDoc } from "./utils/processDoc";
 
 // primary endpoint for gpt to retrieve text documents

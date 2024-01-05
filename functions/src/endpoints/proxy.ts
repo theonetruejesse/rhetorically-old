@@ -1,7 +1,7 @@
 // openai please get your shit together
 // redirect workaround for addressing “Auth URL, Token URL and API hostname must share a root domain” issues
 import { logger } from "firebase-functions/v2";
-import { corsRequest } from "../middleware/cors";
+import { corsRequest } from "../cors";
 import { onRequest } from "firebase-functions/v2/https";
 
 // https://rhetorically.collegiate.dev => https://collegiate-consulting.com

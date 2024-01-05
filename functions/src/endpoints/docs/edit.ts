@@ -1,16 +1,6 @@
 import { TextRange } from "./types";
-import { docRequest } from "../../middleware/docRequest";
+import { docRequest } from "./utils/middleware";
 import { InsertTextHandler, UpdateTextStyleHandler } from "./utils/handlers";
-
-// export const annotateDoc = docRequest(async (req, res) => {
-//   const { documentId, docsClient } = req.docContext;
-//   const docRequest: DocRequest[] = req.body.request;
-//   await docsClient.documents.batchUpdate({
-//     documentId: documentId,
-//     requestBody: addDocRequestBody(docRequest),
-//   });
-//   res.send(`Feedback Given: https://docs.google.com/document/d/${documentId}/`);
-// });
 
 export const highlightText = docRequest(async (req, res) => {
   const { docHandler } = req.docContext;
@@ -54,7 +44,7 @@ export const addComments = docRequest(async (req, res) => {
       index: comment.section.startIndex,
       text: `[${tag}]: `,
     });
-    // add the feedback comment
+    // add the comment's feedback
     textHandler.addDocRequest({
       index: comment.section.endIndex,
       text: `\n[${tag}]: ${comment.feedback}\n`,
