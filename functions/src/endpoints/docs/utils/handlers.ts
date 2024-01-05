@@ -12,41 +12,77 @@ import {
 // (from types.ts): DocRequest -> InsertTextRequest, UpdateTextStyleRequest
 // DocRequestBodyHandler provides interface for requesting the docs api
 
-// export class DocRequestBodyHandler {
-//   createDocRequestBody = (docRequests: DocRequest[]) => {
-//     const requestBody = {
-//       requests: docRequests,
-//     } as DocRequestBody;
-//     // need to cast it as the googleapi type so that i can actually call api
-//     return requestBody as docs_v1.Schema$BatchUpdateDocumentRequest;
-//   };
-// }
+export class DocHandler {
+  private docsClient: docs_v1.Docs;
+  private documentId: string;
 
-// rn just directly returning the static object
-// but should have global docBody handler deal with this, cuz we do need to clean up the object + storage
-export const getDocRequestBody = () => {
-  return DocRequestsHandler.docRequests as docs_v1.Schema$BatchUpdateDocumentRequest;
+  constructor(docsClient: docs_v1.Docs, documentId: string) {
+    this.docsClient = docsClient;
+    this.documentId = documentId;
+  }
+
+  getDocumentId = () => this.documentId;
+
+  private getDocRequestBody = () => {
+    return {
+      requests: DocRequestsHandler.docRequests,
+    } as docs_v1.Schema$BatchUpdateDocumentRequest;
+  };
+
+  callDocRequest = async () => {
+    await this.docsClient.documents.batchUpdate({
+      requestBody: this.getDocRequestBody(), // migrate to handler class
+    });
+    // clean up static data
+    // eventually need to save to last version before anything else
+    DocRequestsHandler.docRequests = [];
+    DocRequestsHandler.offset = [];
+  };
+}
+
+type Offset = {
+  index: number;
+  amount: number;
 };
 
-// type Offset = {
-//   index: number;
-//   length: number;
-// };
-
 abstract class DocRequestsHandler<DocRequestArgs> {
-  //   static offsets: Array<Offset> = []; changed private functions
+  static offset: Array<Offset> = [];
   static docRequests: Array<DocRequest> = [];
-  static offset: number = 0; // this is inaccurate, migrate
 
   // each class provide the args necessary for constructing a DocRequest
-  abstract createDocRequest: (request: DocRequestArgs) => DocRequest;
+  // enables a single exposed method, arg types easily identified
+  abstract addDocRequest: (request: DocRequestArgs) => DocRequest;
 
+  // binary search lmao
   // accounts for each DocRequest that inserts text offsets the initial index positions
-  protected calculateIndex = (index: number): number =>
-    DocRequestsHandler.offset + index;
+  private findInsertionIndex = (target: number) => {
+    let left = 0;
+    let right = DocRequestsHandler.offset.length;
 
-  protected increaseOffset = (text: string): void => {
-    DocRequestsHandler.offset += text.length;
+    while (left < right) {
+      const mid = Math.floor((left + right) / 2);
+      if (DocRequestsHandler.offset[mid].index < target) left = mid + 1;
+      else right = mid;
+    }
+
+    return left;
+  };
+
+  // naive implementations, go nuts with optimization
+  protected calculateIndex = (index: number): number => {
+    const offsetRange = this.findInsertionIndex(index);
+    let total = 0;
+    for (let i = 0; i < offsetRange; i++) {
+      total += DocRequestsHandler.offset[i].amount;
+    }
+    return total + index;
+  };
+  protected increaseOffset = (index: number, text: string): void => {
+    const insertionIndex = this.findInsertionIndex(index);
+    DocRequestsHandler.offset.splice(insertionIndex, 0, {
+      index,
+      amount: text.length,
+    });
   };
 }
 
@@ -56,21 +92,24 @@ type InsertTextArgs = {
 };
 
 export class InsertTextHandler extends DocRequestsHandler<InsertTextArgs> {
-  createDocRequest = (insertTextArgs: InsertTextArgs) => {
+  addDocRequest = (insertTextArgs: InsertTextArgs) => {
     const insertText = this.createInsertTextRequest(insertTextArgs);
-    return {
+    const docRequest = {
       insertText,
-    };
+    } as DocRequest;
+    DocRequestsHandler.docRequests.push(docRequest);
+    return docRequest;
   };
 
   private createInsertTextRequest = (
     args: InsertTextArgs
   ): InsertTextRequest => {
-    this.increaseOffset(args.text);
+    const calculatedIndex = this.calculateIndex(args.index);
+    this.increaseOffset(args.index, args.text);
     return {
       text: args.text,
       location: {
-        index: this.calculateIndex(args.index),
+        index: calculatedIndex,
       },
     };
   };
@@ -82,12 +121,14 @@ type UpdateTextStyleArgs = {
 };
 
 export class UpdateTextStyleHandler extends DocRequestsHandler<UpdateTextStyleArgs> {
-  createDocRequest = (updateTextStyleArgs: UpdateTextStyleArgs) => {
+  addDocRequest = (updateTextStyleArgs: UpdateTextStyleArgs) => {
     const updateTextStyle =
       this.createUpdateTextStyleRequest(updateTextStyleArgs);
-    return {
+    const docRequest = {
       updateTextStyle,
-    };
+    } as DocRequest;
+    DocRequestsHandler.docRequests.push(docRequest);
+    return docRequest;
   };
 
   // collegiate highlight blue lol

@@ -3,9 +3,9 @@ import { processDoc } from "./utils/processDoc";
 
 // primary endpoint for gpt to retrieve text documents
 export const getIndexedText = docRequest(async (req, res) => {
-  const { documentId, docsClient } = req.docContext;
+  const { documentId, docClient } = req.docContext;
 
-  const doc = await docsClient.documents.get({
+  const doc = await docClient.documents.get({
     documentId,
   });
 

@@ -38,7 +38,7 @@ import { BUCKET_URL_REQUEST } from "../../constants";
 // eventually decide which segment to work on, will need index args
 // processes new document, save it into firestore + upload content into storage
 export const saveDocVersion = docRequest(async (req, res) => {
-  const { documentId, docsClient } = req.docContext;
+  const { documentId, docClient } = req.docContext;
 
   const db = getFirestore();
   const docRef = db.collection("docs").doc(documentId);
@@ -47,7 +47,7 @@ export const saveDocVersion = docRequest(async (req, res) => {
 
   // save version based on most current google doc data
 
-  const doc = await docsClient.documents.get({
+  const doc = await docClient.documents.get({
     documentId,
   });
 

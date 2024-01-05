@@ -1,40 +1,33 @@
 import { TextRange } from "./types";
 import { docRequest } from "../../middleware/docRequest";
-import {
-  InsertTextHandler,
-  UpdateTextStyleHandler,
-  getDocRequestBody,
-} from "./utils/handlers";
+import { InsertTextHandler, UpdateTextStyleHandler } from "./utils/handlers";
 
 // export const annotateDoc = docRequest(async (req, res) => {
 //   const { documentId, docsClient } = req.docContext;
 //   const docRequest: DocRequest[] = req.body.request;
 //   await docsClient.documents.batchUpdate({
 //     documentId: documentId,
-//     requestBody: createDocRequestBody(docRequest),
+//     requestBody: addDocRequestBody(docRequest),
 //   });
 //   res.send(`Feedback Given: https://docs.google.com/document/d/${documentId}/`);
 // });
 
 export const highlightText = docRequest(async (req, res) => {
-  const { documentId, docsClient } = req.docContext;
+  const { docHandler } = req.docContext;
   const highlightSections: Array<TextRange> = req.body.sections;
 
-  const handler = new UpdateTextStyleHandler();
-
+  const styleHandler = new UpdateTextStyleHandler();
   highlightSections.map((section) =>
-    handler.createDocRequest({
+    styleHandler.addDocRequest({
       startIndex: section.startIndex,
       endIndex: section.endIndex,
     })
   );
 
-  await docsClient.documents.batchUpdate({
-    documentId: documentId,
-    requestBody: getDocRequestBody(), // migrate to handler class
-  });
-
-  res.send(`Feedback Given: https://docs.google.com/document/d/${documentId}/`);
+  await docHandler.callDocRequest();
+  res.send(
+    `Feedback Given: https://docs.google.com/document/d/${docHandler.getDocumentId()}/`
+  );
 });
 
 type Comment = {
@@ -43,7 +36,7 @@ type Comment = {
 };
 
 export const addComments = docRequest(async (req, res) => {
-  const { documentId, docsClient } = req.docContext;
+  const { docHandler } = req.docContext;
   const comments: Array<Comment> = req.body.comments;
 
   const styleHandler = new UpdateTextStyleHandler();
@@ -52,28 +45,27 @@ export const addComments = docRequest(async (req, res) => {
   let tag = 1;
   comments.forEach((comment) => {
     // highlight commenting sections
-    styleHandler.createDocRequest({
+    styleHandler.addDocRequest({
       startIndex: comment.section.startIndex,
       endIndex: comment.section.endIndex,
     });
     // annotate those sections with tags
-    textHandler.createDocRequest({
+    textHandler.addDocRequest({
       index: comment.section.startIndex,
       text: `[${tag}]: `,
     });
-    // add the feedback comments
-    textHandler.createDocRequest({
-      index: comment.section.startIndex,
+    // add the feedback comment
+    textHandler.addDocRequest({
+      index: comment.section.endIndex,
       text: `\n[${tag}]: ${comment.feedback}\n`,
     });
 
     tag++;
   });
 
-  await docsClient.documents.batchUpdate({
-    documentId: documentId,
-    requestBody: getDocRequestBody(),
-  });
+  await docHandler.callDocRequest();
 
-  res.send(`Feedback Given: https://docs.google.com/document/d/${documentId}/`);
+  res.send(
+    `Feedback Given: https://docs.google.com/document/d/${docHandler.getDocumentId()}/`
+  );
 });

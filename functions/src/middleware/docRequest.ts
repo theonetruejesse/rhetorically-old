@@ -4,6 +4,7 @@ import { docs_v1, google } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
 import { corsRequest } from "./cors";
 import { BadRequestError, HandlerFunction, UnauthorizedError } from "./types";
+import { DocHandler } from "../endpoints/docs/utils/handlers";
 
 declare global {
   namespace Express {
@@ -15,7 +16,8 @@ declare global {
 
 export interface DocRequestContext {
   documentId: string;
-  docsClient: docs_v1.Docs;
+  docClient: docs_v1.Docs;
+  docHandler: DocHandler;
 }
 
 interface ValidatedData {
@@ -54,11 +56,12 @@ export const docRequest = (handler: HandlerFunction) => {
   return corsRequest(async (req: Request, res: Response) => {
     try {
       const validatedData = validateDocRequest(req);
-      const docsClient = createDocClient(validatedData.accessToken);
+      const docClient = createDocClient(validatedData.accessToken);
 
       req.docContext = {
         documentId: validatedData.documentId,
-        docsClient,
+        docClient: docClient,
+        docHandler: new DocHandler(docClient, validatedData.documentId),
       };
 
       await handler(req, res);
