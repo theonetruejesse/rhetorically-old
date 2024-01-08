@@ -68,11 +68,11 @@ paths:
           description: Unauthorized - User not logged in or invalid/expired token.
         "405":
           description: Method Not Allowed
-  /api/highlightText:
+  /api/saveDocVersion:
     post:
-      operationId: highlightText
-      summary: Highlights specified text ranges in a Google Doc.
-      description: Highlights sections of a Google Doc based on provided text ranges. Requires OAuth 2.0 authentication.
+      operationId: saveDocVersion
+      summary: Saves the current version of the Google Doc file in DB.
+      description: Saves the current version of the Google Doc file based on documentId in DB. Requires OAuth 2.0 authentication.
       security:
         - bearerAuth: []
       parameters:
@@ -82,20 +82,17 @@ paths:
           description: The ID of the Google Document.
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                sections:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/TextRange"
-        required: true
       responses:
         "200":
-          description: Successfully highlighted text.
+          description: Successful response with saved versionId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  versionId:
+                    type: string
+                    description: Returns an id of the Google Doc version saved in the DB
         "400":
           description: Missing query - documentId.
         "401":
@@ -122,6 +119,9 @@ paths:
             schema:
               type: object
               properties:
+                versionId:
+                  type: string
+                  description: The version ID of the document.
                 comments:
                   type: array
                   items:

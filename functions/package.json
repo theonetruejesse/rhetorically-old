@@ -9,6 +9,7 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
+    "deploy:actions": "firebase deploy --only functions:listDocs,functions:getIndexedText,functions:saveDocVersion,functions:addComments",
     "logs": "firebase functions:log"
   },
   "engines": {

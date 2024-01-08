@@ -15,6 +15,7 @@ I will be referring to the rhetorically.collegiate.dev API as just rhetorically 
 After the student tells you which essay to work on:
 
 1. Call rhetorically getIndexedText on the doc using its documentId
+2. Call rhetorically saveDocVersion on the doc using its documentId
 
 ## Application Procedure
 

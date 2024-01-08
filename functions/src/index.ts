@@ -10,25 +10,26 @@ admin.initializeApp({
 
 import * as logger from "firebase-functions/logger";
 import { onRequest } from "firebase-functions/v2/https";
-export const helloWorld = onRequest((req, res) => {
+// testing
+export const helloWorld = onRequest((_, res) => {
   logger.log("Hello logger!");
   res.send("Hello from Firebase!");
 });
 
 import proxy = require("./endpoints/proxy");
-exports.redirectToLandingPage = proxy.redirectToLandingPage;
-exports.proxyTokenUrl = proxy.proxyTokenUrl;
-exports.proxyAuthUrl = proxy.proxyAuthUrl;
+exports.redirectToLandingPage = proxy.redirectToLandingPage; // website
+exports.proxyTokenUrl = proxy.proxyTokenUrl; // gpt oauth perms
+exports.proxyAuthUrl = proxy.proxyAuthUrl; // gpt oauth perms
 
 import drive = require("./endpoints/drive");
-exports.listDocs = drive.listDocs;
+exports.listDocs = drive.listDocs; // gpt actions endpoint
 
 import * as docs from "./endpoints/docs";
-exports.getIndexedText = docs.getIndexedText;
-exports.saveDocVersion = docs.saveDocVersion;
-exports.highlightText = docs.highlightText;
-exports.addComments = docs.addComments;
+exports.getIndexedText = docs.getIndexedText; // gpt actions endpoint
+exports.saveDocVersion = docs.saveDocVersion; // gpt actions endpoint
+exports.addComments = docs.addComments; // gpt actions endpoint
+exports.highlightText = docs.highlightText; // testing
 
 import oauth = require("./endpoints/oauth");
-exports.googleSignIn = oauth.googleSignIn;
-exports.oauth2callback = oauth.oauth2callback;
+exports.googleSignIn = oauth.googleSignIn; // testing
+exports.oauth2callback = oauth.oauth2callback; // testing
