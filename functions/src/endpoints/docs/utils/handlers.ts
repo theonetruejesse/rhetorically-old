@@ -1,11 +1,10 @@
 import { docs_v1 } from "googleapis";
 import {
-  // DocRequestBody,
   DocRequest,
   InsertTextRequest,
   UpdateTextStyleRequest,
   OptionalColor,
-} from "../types";
+} from "./types";
 
 // see functions/src/docs/types.ts
 // these classes handle docs api Request objects

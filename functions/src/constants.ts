@@ -2,7 +2,7 @@ import { GetSignedUrlConfig } from "@google-cloud/storage";
 
 export const GOOGLE_AUTH_SCOPES = [
   "https://www.googleapis.com/auth/documents",
-  "https://www.googleapis.com/auth/drive.readonly",
+  "https://www.googleapis.com/auth/drive",
 ];
 
 export const STORAGE_BUCKET = "gs://rhetorically-98ba2.appspot.com";

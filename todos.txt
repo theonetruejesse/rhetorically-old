@@ -1,8 +1,14 @@
+- migrate drive axios to googleapis sdk 
+- refractor middleware
+
+--
+
+- github collaboration settings + notion todos
+
 - audit comments for todos
 
 - google store, service, make sure security rules are in prod
 
-- migrate drive axios to googleapis sdk + github collaboration settings + notion todos
 
 - reduce total scope from restricted -> sensitive
     - change scope from https://www.googleapis.com/auth/drive.activity -> https://www.googleapis.com/auth/drive.file

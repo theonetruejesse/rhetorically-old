@@ -1,5 +1,5 @@
-import { TextRange } from "./types";
-import { docRequest } from "./utils/middleware";
+import { apiRequest } from "../../middleware";
+import { TextRange } from "./utils/types";
 import {
   InsertTextArgs,
   InsertTextHandler,
@@ -7,28 +7,12 @@ import {
 } from "./utils/handlers";
 import { getFirestore } from "firebase-admin/firestore";
 
-export const highlightText = docRequest(async (req, res) => {
-  const { documentId, docHandler } = req.docContext;
-  const highlightSections: Array<TextRange> = req.body.sections;
-
-  const styleHandler = new UpdateTextStyleHandler();
-  highlightSections.map((section) =>
-    styleHandler.addDocRequest({
-      startIndex: section.startIndex,
-      endIndex: section.endIndex,
-    })
-  );
-
-  await docHandler.callDocRequest();
-  res.send(`Feedback Given: https://docs.google.com/document/d/${documentId}/`);
-});
-
 type Comment = {
   section: TextRange;
   feedback: string;
 };
 
-export const addComments = docRequest(async (req, res) => {
+export const addComments = apiRequest(async (req, res) => {
   const { documentId, docHandler } = req.docContext;
   const comments: Array<Comment> = req.body.comments;
   const versionId: string = req.body.versionId;
@@ -102,12 +86,12 @@ class CommentFormatter {
     const res = [];
 
     // comment formatting for batching
+    // assumes standarized doc formatting
     const formatComment = (
       index: number,
       lastIndex: number,
       comment: string
     ) => {
-      // assumes standarized doc formatting
       const base = `\t${comment}\n`;
       switch (index) {
         case 0:
@@ -135,3 +119,20 @@ class CommentFormatter {
     return res;
   };
 }
+
+// depreciated
+export const highlightText = apiRequest(async (req, res) => {
+  const { documentId, docHandler } = req.docContext;
+  const highlightSections: Array<TextRange> = req.body.sections;
+
+  const styleHandler = new UpdateTextStyleHandler();
+  highlightSections.map((section) =>
+    styleHandler.addDocRequest({
+      startIndex: section.startIndex,
+      endIndex: section.endIndex,
+    })
+  );
+
+  await docHandler.callDocRequest();
+  res.send(`Feedback Given: https://docs.google.com/document/d/${documentId}/`);
+});
