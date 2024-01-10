@@ -59,7 +59,9 @@ export const saveDocVersion = apiRequest(async (req, res) => {
 
   await saveVersion(verRef, doc, documentId); // pubsub this
 
-  res.send({ versionId: verRef.id });
+  res.send({
+    versionId: verRef.id,
+  });
 });
 
 // saves createdAt (timestamp) into 'docs / {documentId}' if it doesn't exist already

@@ -21,8 +21,9 @@ exports.redirectToLandingPage = proxy.redirectToLandingPage; // website
 exports.proxyTokenUrl = proxy.proxyTokenUrl; // gpt oauth perms
 exports.proxyAuthUrl = proxy.proxyAuthUrl; // gpt oauth perms
 
-import drive = require("./endpoints/drive/list");
+import drive = require("./endpoints/drive");
 exports.listDocs = drive.listDocs; // gpt actions endpoint
+exports.createCopy = drive.createCopy; // testing
 
 import * as docs from "./endpoints/docs";
 exports.getIndexedText = docs.getIndexedText; // gpt actions endpoint

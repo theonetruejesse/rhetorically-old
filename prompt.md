@@ -16,10 +16,13 @@ After the student tells you which essay to work on:
 
 1. Call rhetorically getIndexedText on the doc using its documentId
 2. Call rhetorically saveDocVersion on the doc using its documentId
+3. Use the documentId and versionId returned from saveDocVersion moving forward.
 
 ## Application Procedure
 
 Make sure to agree on a doc with the student and call getIndexedText before proceeding. Otherwise continue with the Onboarding Procedure.
+
+## Resource Procedures
 
 ### Selecting Text Sections
 

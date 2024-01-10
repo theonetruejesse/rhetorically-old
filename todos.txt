@@ -1,17 +1,11 @@
-- migrate drive axios to googleapis sdk 
-- refractor middleware
-
---
-
 - github collaboration settings + notion todos
 
 - audit comments for todos
 
 - google store, service, make sure security rules are in prod
 
-
 - reduce total scope from restricted -> sensitive
-    - change scope from https://www.googleapis.com/auth/drive.activity -> https://www.googleapis.com/auth/drive.file
+    - change scope from https://www.googleapis.com/auth/drive -> https://www.googleapis.com/auth/drive.file
     - incorporate Google Picker API into flow
 
 - make sure filtering for getDocText accounts for suggestions too

@@ -2,7 +2,7 @@ import { apiRequest, contextOptions } from "../../middleware";
 
 // createCopy() gpt actions endpoint
 // 1. create copy of doc
-// 2. move doc to right folder location + adjust title
+// todo, 2. adjust title
 const config = {
   contextType: contextOptions.drive,
   documentIdOptional: false,
@@ -10,7 +10,13 @@ const config = {
 export const createCopy = apiRequest(async (req, res) => {
   const { driveClient, documentId } = req.driveContext;
 
-  await driveClient.files.copy({
-    fileId: documentId,
-  });
+  const copy = await driveClient.files
+    .copy({
+      fileId: documentId,
+    })
+    .catch((e) => {
+      throw Error(`error copying file: ${e}`);
+    });
+
+  res.send({ newDocumentId: copy.data.id });
 }, config);
